@@ -1,0 +1,5185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.9.3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.1"></script>
+</head>
+<body>
+  <div id="vis"/>
+  <script>
+    const spec = {
+  "config": {
+    "view": {"continuousWidth": 300, "continuousHeight": 300},
+    "legend": {
+      "cornerRadius": 10,
+      "fillColor": "#EEEEEE",
+      "legendX": 1000,
+      "legendY": 240,
+      "orient": "none",
+      "padding": 10,
+      "strokeColor": "gray"
+    }
+  },
+  "vconcat": [
+    {
+      "layer": [
+        {
+          "data": {"name": "data-08e44516981aeb160072fe8689076978"},
+          "mark": {"type": "image", "height": 500, "width": 2000},
+          "encoding": {
+            "url": {"field": "imagen", "type": "nominal"},
+            "x": {"value": 300},
+            "x2": {"value": 500},
+            "y": {"value": 100},
+            "y2": {"value": 200}
+          },
+          "title": {
+            "text": "La XIV legislatura en 40 palabras",
+            "color": "gray",
+            "dx": 260,
+            "dy": 100,
+            "fontSize": 30
+          }
+        },
+        {
+          "layer": [
+            {
+              "data": {"name": "data-de7f59f60b9669f0caf4c243e92df689"},
+              "mark": {"type": "image", "height": 500, "width": 2000},
+              "encoding": {
+                "url": {"field": "imagen", "type": "nominal"},
+                "x": {"value": 500},
+                "x2": {"value": 1000},
+                "y": {"value": 0},
+                "y2": {"value": 200}
+              },
+              "title": {
+                "text": "La XIV legislatura en 40 palabras",
+                "color": "gray",
+                "dx": 260,
+                "dy": 100,
+                "fontSize": 30
+              }
+            },
+            {
+              "data": {"name": "empty"},
+              "mark": {
+                "type": "text",
+                "align": "left",
+                "color": "grey",
+                "size": 8
+              },
+              "encoding": {
+                "text": {
+                  "value": [
+                    "Nube de palabras",
+                    "generada automáticamente",
+                    "de los textos extraídos."
+                  ]
+                },
+                "x": {"value": 950},
+                "y": {"value": 175}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "hconcat": [
+        {
+          "hconcat": [
+            {
+              "mark": {
+                "type": "bar",
+                "color": "#0d347f",
+                "height": 20,
+                "opacity": 0.6
+              },
+              "encoding": {
+                "row": {
+                  "field": "term",
+                  "header": {
+                    "labelAlign": "left",
+                    "labelAngle": 0,
+                    "labelOrient": "left"
+                  },
+                  "sort": {
+                    "field": "mi_fecha",
+                    "op": "mean",
+                    "order": "descending"
+                  },
+                  "spacing": 0,
+                  "title": "",
+                  "type": "nominal"
+                },
+                "x": {
+                  "aggregate": "mean",
+                  "field": "mi_fecha",
+                  "title": "Relevancia (Información mutua)",
+                  "type": "quantitative"
+                }
+              },
+              "height": 20,
+              "width": 100
+            },
+            {
+              "mark": {
+                "type": "area",
+                "color": "#0d347f",
+                "height": 20,
+                "opacity": 0.5
+              },
+              "encoding": {
+                "row": {
+                  "field": "term",
+                  "header": null,
+                  "sort": {
+                    "field": "mi_fecha",
+                    "op": "mean",
+                    "order": "descending"
+                  },
+                  "spacing": 0,
+                  "title": "",
+                  "type": "nominal"
+                },
+                "x": {
+                  "field": "_fecha",
+                  "timeUnit": "yearmonth",
+                  "title": "Frecuencia (TF-IDF) x Fecha (mes-año)",
+                  "type": "temporal"
+                },
+                "y": {"axis": null, "field": "mean_tf", "type": "quantitative"}
+              },
+              "height": 20,
+              "resolve": {"scale": {"y": "independent"}},
+              "transform": [
+                {
+                  "aggregate": [
+                    {"op": "mean", "field": "tfidf", "as": "mean_tf"}
+                  ],
+                  "groupby": ["term", "_fecha"]
+                }
+              ],
+              "width": 300
+            }
+          ],
+          "data": {"name": "data-b7eee5a4d63cac2de279873f8a0eb184"},
+          "resolve": {"scale": {"color": "independent"}},
+          "spacing": 0,
+          "title": {
+            "text": [
+              "Términos más representativos en momentos de la legislatura"
+            ],
+            "align": "center",
+            "anchor": "middle"
+          }
+        },
+        {
+          "hconcat": [
+            {
+              "mark": {
+                "type": "bar",
+                "color": "#d2bd5a",
+                "height": 20,
+                "opacity": 0.6
+              },
+              "encoding": {
+                "row": {
+                  "field": "term",
+                  "header": {
+                    "labelAlign": "left",
+                    "labelAngle": 0,
+                    "labelOrient": "left"
+                  },
+                  "sort": {
+                    "field": "mi_grupo",
+                    "op": "mean",
+                    "order": "descending"
+                  },
+                  "spacing": 0,
+                  "title": "",
+                  "type": "nominal"
+                },
+                "x": {
+                  "aggregate": "mean",
+                  "field": "mi_grupo",
+                  "title": "Relevancia (Información mutua)",
+                  "type": "quantitative"
+                }
+              },
+              "height": 20,
+              "width": 100
+            },
+            {
+              "mark": {"type": "circle", "size": 100},
+              "encoding": {
+                "color": {
+                  "field": "_grupo",
+                  "scale": {
+                    "domain": ["ERC", "PNV", "PP", "PSOE", "UP", "Vox"],
+                    "range": [
+                      "#fbc259",
+                      "#426938",
+                      "#1e4b8f",
+                      "#e30713",
+                      "#693065",
+                      "#5ac036"
+                    ]
+                  },
+                  "title": "Partido",
+                  "type": "nominal"
+                },
+                "opacity": {
+                  "condition": {"param": "param_2", "value": 1},
+                  "value": 0.5
+                },
+                "row": {
+                  "field": "term",
+                  "header": null,
+                  "sort": {
+                    "field": "mi_grupo",
+                    "op": "mean",
+                    "order": "descending"
+                  },
+                  "spacing": 0,
+                  "title": "",
+                  "type": "nominal"
+                },
+                "x": {
+                  "field": "tfidf",
+                  "scale": {"type": "sqrt"},
+                  "title": "Frecuencia (TF-IDF) x Partido",
+                  "type": "quantitative"
+                }
+              },
+              "height": 20,
+              "name": "view_2",
+              "transform": [
+                {
+                  "fold": ["PSOE", "PP", "Vox", "UP", "ERC", "PNV"],
+                  "as": ["_grupo", "tfidf"]
+                }
+              ],
+              "width": 300
+            }
+          ],
+          "data": {"name": "data-2684c91b0f80a975b55a217026756cef"},
+          "spacing": 0,
+          "title": {
+            "text": ["Términos más representativos entre partidos políticos"],
+            "align": "center",
+            "anchor": "middle"
+          }
+        }
+      ]
+    }
+  ],
+  "params": [
+    {
+      "name": "param_2",
+      "select": {"type": "point", "fields": ["_grupo"]},
+      "bind": "legend",
+      "views": ["view_2"]
+    }
+  ],
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.6.1.json",
+  "datasets": {
+    "data-08e44516981aeb160072fe8689076978": [
+      {"imagen": "https://i.ibb.co/sqgsrJ0/image.png"}
+    ],
+    "data-de7f59f60b9669f0caf4c243e92df689": [
+      {"imagen": "https://i.ibb.co/XxN75Jm/wordcloud.png"}
+    ],
+    "empty": [{}],
+    "data-b7eee5a4d63cac2de279873f8a0eb184": [
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.0063686126672183
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.0058898977453004
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.0016273523274817
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.0012390486506316
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.000657898436123
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.0038821946143659
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.0018143987043999
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.0115296655494868
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.0020367943595042
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.0073528907279032
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0.0232599813522402
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2019-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.00004782472217853216
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0030669916137493
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0103594660880089
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0040819946447617
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0013781813120645
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0057288857712738
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0030442557176212
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0029027446285776
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0072042739821116
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.00008256587811336629
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0043652332080461
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0099304986142526
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0011726355328871
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0080621882683597
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0001108898029284
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-01-01 00:00:00",
+        "tfidf": 0.0010035987501174
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0006335508845915
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0049414362182878
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0066901009946682
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0067275017646947
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0029744588978325
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0054566298693851
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0000628370221917504
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0015655382721951
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.00002045314184250236
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0030094848191204
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0029514382585041
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0004252612296377
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0038158435883312
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.006638975427946
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0025474107619221
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.002509274430682
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0001191636344473
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-02-01 00:00:00",
+        "tfidf": 0.0010908856526267
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0001246383416202
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0028215775458708
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0033691601569732
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0060158789510887
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0017076991614082
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0017216030659315
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.000015337578615571654
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0010754315446929
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0018531001499331
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0009937184701505
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0003545694981597
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0015045872964387
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0001562543928151
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0057460077679843
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0021656164092151
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0028728630716307
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0003160418875122
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.0005451365445179
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-03-01 00:00:00",
+        "tfidf": 0.005696559162404
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.000068019760809224
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0064167890061793
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0028047081549547
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0058924001453956
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0009048600637242
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0077745659189944
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0022781949236539
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0033648358706387
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0010999014952441
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0004373336963432
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0027172320364379
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0002297505598662
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0043738064776373
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0081141254392421
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.001238823004866
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0005614041593792
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0001827150601437
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-04-01 00:00:00",
+        "tfidf": 0.0052088563076362
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0003850598960234
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0054567297551331
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0032976348628137
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0055655510395239
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0021806491457964
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0108670019435638
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0016012971585514
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0060941623529954
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0010365352718355
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0006325009639112
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0018803702945841
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0001714569136221
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0043417866955175
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0083470916770251
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0014811597525953
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0007704582379568
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.00007883194095039336
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-05-01 00:00:00",
+        "tfidf": 0.0035919987943443
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.000337572673243
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0055443233157812
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0051989433163347
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0074695995760976
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0024632228407943
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0058625011302857
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.00001296973461752788
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0029229463474371
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0016368751885021
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0025015743118764
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0016494461564795
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0012263838363234
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0001407373527708
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0036758405660017
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.006259799573297
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0022493763419026
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0016784664927376
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0001992075696855
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-06-01 00:00:00",
+        "tfidf": 0.0020342251816915
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0001487221520948
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0051530586841473
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0051820347433313
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0083094128092962
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0019456729233858
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0054929869358906
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.00004300698777538682
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0035350396872231
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0009493666722024
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0021590369101321
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0008578391027554
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0015740254718681
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0001813599147702
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0057723448660167
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0067988087598133
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0024083987888669
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0009234280757045
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.0001405876815386
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-07-01 00:00:00",
+        "tfidf": 0.001547826572487
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0001927397891464
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0021198562095851
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0039808589253173
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0048887621063861
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0011037283941714
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0003628638492249
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0025716823584344
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0006024056703317
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0022828737873999
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0014612784526498
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0022192187900716
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0001327597195026
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.005010630426357
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0023102644630054
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0040055965747557
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0014084443430325
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.00005191379539427691
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-08-01 00:00:00",
+        "tfidf": 0.0011451126904082
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0013367286912236
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0065810347520787
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0048312120764006
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0060310730064816
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0027999509857207
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0067392160701347
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.000007271663312876415
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0026010151198325
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0003556586479828
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0026888044877543
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0021662822961706
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0017564822980262
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0001451549764631
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.004248132561957
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0077970131549994
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0023090428553877
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.001749614486797
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0001849006346047
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-09-01 00:00:00",
+        "tfidf": 0.0014341683606447
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0005752592952829
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0048075235048027
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0062745629333012
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0089230780814662
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0020254145246299
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0069142129849469
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0000032514863028643207
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.002002545152266
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0015444068282353
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0038730380131083
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0022657574652778
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0016530123566249
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0001979217997778
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0046353875679107
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0064110958999847
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.003069275753259
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0024749680537555
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0003214131911824
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-10-01 00:00:00",
+        "tfidf": 0.0009934927823409
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.006021465283635
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0089701732941916
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0086473449135072
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0100479386815918
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0024437425285733
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0059057798269168
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.00003623445860393993
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0027873990600067
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0008435273912637
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0030251466594171
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0021613330117703
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0018865722390384
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0013381644675972
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0063176338900111
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0045605481654372
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0030735527121081
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0018864624744696
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0001951161963412
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-11-01 00:00:00",
+        "tfidf": 0.0013082315447319
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0053891673941744
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0042335723243393
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0103593904784864
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0156556749308323
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0018347774528331
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0048589070654876
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.000024416912624899373
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0020389789755141
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0007766763594379
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0033657977978416
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0028030011947455
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0013138293446683
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0027510765096291
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0080307667387573
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0053370198738099
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0043755212271089
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.0023384765817116
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.00008735358140202001
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2020-12-01 00:00:00",
+        "tfidf": 0.001105726994343
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.000623253942526
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0023885169269185
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0034990654866392
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0067763843238776
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0023605676247667
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0006733721083208
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.000020322709760635813
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0030062820919461
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0009993384610442
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0015956922057737
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0014672953027479
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0015056564874697
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0001193704046825
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0069818282359492
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0028546976507056
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.002761726111497
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.0006259797349619
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.00004990872741791044
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-01-01 00:00:00",
+        "tfidf": 0.000913256837925
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0005004305823716
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0076355112444142
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0088437671774255
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0067865290806136
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0029298713860961
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0069203783666189
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.00003611181301568449
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0024356236827041
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0006236825550157
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0034068338017419
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.002831675743662
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0013193949295492
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0001043887000892
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0041925912722624
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0061609360162482
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0025105147680873
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0025948819221645
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.00009486056533970868
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-02-01 00:00:00",
+        "tfidf": 0.0009740149201302
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.000415693527372
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0047402386172422
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0098236405157886
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0079807721144402
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0027816838446387
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0062686635126598
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.000004986632436556331
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0022780827203274
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0003245824280338
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0027322288838401
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0023427161811086
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0015349747572431
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0001724468157694
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0056235352431345
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0049092935446767
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0032170209981671
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0021983877413382
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.0002751996885404
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-03-01 00:00:00",
+        "tfidf": 0.001002934033728
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0002110303227881
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0057843322605455
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0093086973703318
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0097752729930135
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.002240556134309
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0071093076954239
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.000006443905701033561
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0049711719345024
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0008114328082622
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0025915653663108
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0026620833316319
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0012899537368716
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.00006608893639602468
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0056637242565348
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0073373678986741
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0024001654280223
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0027625879943682
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.00027440187825
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-04-01 00:00:00",
+        "tfidf": 0.0003519794036003
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0002374498220173
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0052742600340689
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0071913886779168
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0085513897067701
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0037339617767059
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0048829843563242
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0002014497998697
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0035717779833798
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0009289668206363
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0037882000577615
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0024201369015283
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0013650407937008
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0002483161170167
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0058323271982282
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0041875952031994
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0030733939371479
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0025097311491355
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.00007684937016943361
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-05-01 00:00:00",
+        "tfidf": 0.0011887951800993
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0002567144271556
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0039401613352956
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0091661929811429
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0079439109918942
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0034016032808153
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0060198824876879
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.00005045322211720462
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0030424705574617
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0001101424172348
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0032030274539973
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0018788602682425
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0008817246799332
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0001122818247105
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0072399720683798
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0060874346079492
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0025833948543685
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0018906649590262
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0001615274657462
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-06-01 00:00:00",
+        "tfidf": 0.0008909662976239
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0002254975042537
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0094186594345436
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0252394430814415
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0100570123007683
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0039387615233863
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0035415975732426
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.00008454692801889739
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.000644300566345
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0019153929129294
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0028245443064455
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0018150625918863
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0009764107670772
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0000988143178650302
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0085128320972042
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0030318252769345
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.00182448598241
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0022937576816047
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.000051178582933419495
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-07-01 00:00:00",
+        "tfidf": 0.0009792379346511
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0001201014261005
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0037293016389445
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0032682582014178
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0062912069151592
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0013750675490995
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0009106650428658
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0033857740997906
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.002829701288667
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0020083164209195
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0004470615452052
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0007546043583478
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.00005868503546226265
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0051335870352048
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0047570228731756
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0022795571543698
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0009364481978802
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0001586964387778
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-08-01 00:00:00",
+        "tfidf": 0.0005795463401196
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0006657596389964
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0049852229370388
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0071839365934506
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0095450837402333
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0028886933068306
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0061125391335269
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0001554542602106
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0035180162627441
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0003231332608884
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0030936772917383
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0017601310531449
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0008145185030023
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0003874360996141
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0065882863425032
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.004676885446139
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0034047368450791
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0020777830073591
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0000675076149113448
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-09-01 00:00:00",
+        "tfidf": 0.0006283904604127
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0017312939840527
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0029954382207074
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.014253900440714
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0079694352660687
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0033471068823944
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0067089625014739
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0006241395546226
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0033028872427557
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.00006742078751078295
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0030891742938551
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0028225835988207
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0005822076701235
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.000237280095495
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0074121288698679
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0040638586002449
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0032399115202892
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0026429530116627
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0001587444918903
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-10-01 00:00:00",
+        "tfidf": 0.0006819862566224
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0069206249166613
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0026491458902049
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.012303106937187
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0088515596101313
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0015061369138889
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0054850009529315
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0008619064264858
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0037779594050231
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0001021380169997
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0026921239116214
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0030718257235274
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0006475233758388
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0021576042385939
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0058554263263309
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0052776373959402
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0036572806710742
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0028470389161045
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0001641162119754
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-11-01 00:00:00",
+        "tfidf": 0.0012945122944357
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0008970935108764
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0043603983816749
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0090450002087719
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0072159665747527
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0045936767782997
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0052256758305924
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0003574820425215
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0028630775756036
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.00003267037712492015
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.00247035833212
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0020611742780033
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0008351930960257
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0002728264375848
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0061600460698288
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0037153258688949
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0025441969628243
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0018453753605866
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.000029929327164992588
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2021-12-01 00:00:00",
+        "tfidf": 0.0004203538765641
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0017592744309282
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0014089024329832
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0054887566842039
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.005457737037669
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0037924235286513
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0014868800396655
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0011410671408142
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0036828610997044
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0001349409339219
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0001892112372825
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0023271242424242
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0027676414280439
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0014800290546238
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.000718203940364
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0051616240282647
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0029220361688566
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0026541309049104
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0007960910646773
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-01-01 00:00:00",
+        "tfidf": 0.0005855334857878
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0003068309388361
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0041007034527692
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0060201887268195
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0053486724174395
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0031267571885528
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.004695638327953
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0002880025555344
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0033783605029658
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0001863135754224
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0001313000275655
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0026337092911773
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0029407632074627
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.000704608319767
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0003077667018547
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0033793659319558
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0047893649872038
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0034342007274191
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0025305279148064
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0005086538101418
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-02-01 00:00:00",
+        "tfidf": 0.0007033354501444
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.000355796730544
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0061360174039007
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0070776732664292
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0090594617645126
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.002944901849293
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0047608498376067
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0004192815777547
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0046858019529177
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0017269742150032
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0001152251446965
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0023563980076853
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0021474873961774
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.000928611334695
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.000394887499351
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0074318146606709
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0049288158343864
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0036376710190479
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0019143535213741
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0029770191944878
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-03-01 00:00:00",
+        "tfidf": 0.0012376248970411
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0001235611756431
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0053940248358506
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0077467981378987
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0072221478372664
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0025748594277693
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0062766415805581
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0002968235003093
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0023613811912113
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0012553258001295
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0001038611308815
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0029826690465377
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0024717711552135
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0016485424179464
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0002974362942523
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0050530897075641
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0031458757449048
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0055250204337549
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0025702417353774
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0012469878838053
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-04-01 00:00:00",
+        "tfidf": 0.0008639860682077
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0001290174217995
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0043869382199372
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0090247736300186
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0094275558199414
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0032377876700133
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0056118157918162
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.000425212937493
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0077610217544764
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0006287109642609
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0001348825119521
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0034502543492272
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0030280341174454
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0004302195552467
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0001455725716436
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0064781976679167
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0056336186639934
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0033029592308187
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0031415951174859
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0008046723714252
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-05-01 00:00:00",
+        "tfidf": 0.0007106875842
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.000185103023586
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0077613433463832
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0094813488400736
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0102969657454866
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0030401473037894
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.003905791219876
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0004830784521989
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0037459622586806
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0006425748400933
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0000443046391202386
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0033565112413874
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0029007855634945
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.00039522873991
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0002884538222138
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0068749624010274
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.005631426766773
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0028199534120639
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0028493485718222
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.0007673260803799
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-06-01 00:00:00",
+        "tfidf": 0.000755709795855
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0001750819118525
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.009242305192696
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0080798453385308
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0088408088453354
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0045466336307665
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0038635668454766
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.000489359344655
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0032345899210007
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0006662392208651
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0001654131705916
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.003852483527602
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0043437075512249
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0006906463710471
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.00009344893098147592
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0072519832200631
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0046132237934971
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0047704649571743
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0045134436535325
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.0017484370083146
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-07-01 00:00:00",
+        "tfidf": 0.002164597381661
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.00005783846767998283
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0028447151180433
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0049415837827386
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0051879740397588
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0035826988627416
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0033244097958806
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0006683543000113
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0007341170665992
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0011498488424518
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0002031462316061
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0016895895729534
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0008896179364977
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0003282927524981
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0003176063075317
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0042614321568867
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0028581676473635
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0027466357315442
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0005589762929601
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0006082664464808
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-08-01 00:00:00",
+        "tfidf": 0.0009911725792027
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.00029347338407
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.001843221263567
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0078899125069251
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0068090183767336
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0028269161643375
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0041924559936151
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0007766771761525
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0068477131864567
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0009339561200649
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.000026986903652134653
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0033468395188058
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0027376619549529
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0001554487342054
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0002702953614651
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0052927749591728
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0061024315385612
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0030880439840393
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0026934725130747
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0010063339400104
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-09-01 00:00:00",
+        "tfidf": 0.0009918573973878
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0025255336758396
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0031478874506367
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0069711385208259
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0034349670619965
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0032751768231259
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0059541890847455
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0005447639277732
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0010959581216996
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0006108871994306
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0025372076762183
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0023503640698765
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0006972393977534
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0007236890768283
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0021842041117827
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0039340459786403
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0032998261642606
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0024931755689953
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0009458372771575
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-10-01 00:00:00",
+        "tfidf": 0.0012973363938869
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0053864377467432
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0042068720333484
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0080210649237454
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0082077262128962
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.003256047012574
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0036355475027162
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0007210822115449
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0019447005128234
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0004793579857851
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.000260742423348
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0030455934239979
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0028748161047837
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0002436965983752
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0013772462135012
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0056971541154427
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.00320962267937
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0037056555874113
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0027215298398599
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0005440761471509
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-11-01 00:00:00",
+        "tfidf": 0.0008251389128541
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0006211308632695
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0076618112901248
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0074803444776892
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0072944239696789
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0058516776008256
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0045949183439674
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.000378577506122
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0054147911332325
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0003900599362549
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0000447079078242643
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0035157785162446
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.002662027036263
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0003921590660243
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0001812561419839
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0052788090595569
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0035160298593753
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0047839124957866
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.002273293240974
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0003884755838458
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2022-12-01 00:00:00",
+        "tfidf": 0.0004879294946691
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0003211787009039
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0011034922397517
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0059419757265784
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0044566488291372
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0026193616219744
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0048487944460573
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0006787295325327
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0021604557326534
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0009389670975874
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0001067392142324
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0021345642200221
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0017240846722483
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.000486564739674
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0037910501892043
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0053847075811917
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0027376352500667
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.001857389973174
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0009107297912694
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2023-01-01 00:00:00",
+        "tfidf": 0.0011406969316495
+      },
+      {
+        "term": "presupuestos",
+        "mi_fecha": 0.1034542513707494,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0002270848432301
+      },
+      {
+        "term": "presidenta",
+        "mi_fecha": 0.0713362308994285,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.006398475046301
+      },
+      {
+        "term": "aplausos",
+        "mi_fecha": 0.0687588114814854,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0082312260819278
+      },
+      {
+        "term": "gracias",
+        "mi_fecha": 0.0624890384606997,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.009540425566025
+      },
+      {
+        "term": "ley",
+        "mi_fecha": 0.04638083801788,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0052148019300041
+      },
+      {
+        "term": "usted",
+        "mi_fecha": 0.0400400318283575,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0050779089546893
+      },
+      {
+        "term": "2022",
+        "mi_fecha": 0.0392417272571605,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0005967275854509
+      },
+      {
+        "term": "presidente",
+        "mi_fecha": 0.0389600437275583,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0036832676568483
+      },
+      {
+        "term": "ucrania",
+        "mi_fecha": 0.0388604730015518,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0003878070493676
+      },
+      {
+        "term": "alarma",
+        "mi_fecha": 0.0382582157392501,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0000202635793123568
+      },
+      {
+        "term": "grupo",
+        "mi_fecha": 0.0367385240587356,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0033628741055367
+      },
+      {
+        "term": "señores",
+        "mi_fecha": 0.0363995255579592,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0026775553376101
+      },
+      {
+        "term": "pandemia",
+        "mi_fecha": 0.0362830733950561,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0002904711131315
+      },
+      {
+        "term": "presupuesto",
+        "mi_fecha": 0.0360078899328788,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.00008842344789726525
+      },
+      {
+        "term": "muchas",
+        "mi_fecha": 0.0351931526340805,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0055911508319509
+      },
+      {
+        "term": "señor",
+        "mi_fecha": 0.0335259367482216,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0040532049655138
+      },
+      {
+        "term": "señorías",
+        "mi_fecha": 0.0334166052849571,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0027101222754394
+      },
+      {
+        "term": "diputados",
+        "mi_fecha": 0.033020863365119,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0026478018462719
+      },
+      {
+        "term": "guerra",
+        "mi_fecha": 0.0316682004507848,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0003407533356288
+      },
+      {
+        "term": "crisis",
+        "mi_fecha": 0.0315553323971697,
+        "_fecha": "2023-02-01 00:00:00",
+        "tfidf": 0.0004519904342803
+      }
+    ],
+    "data-2684c91b0f80a975b55a217026756cef": [
+      {
+        "term": "aplausos",
+        "mi_grupo": 0.1364215607017187,
+        "ERC": 0.0079329626632097,
+        "PNV": 0.0004159927975076,
+        "PP": 0.009237059475607,
+        "PSOE": 0.0080011807814278,
+        "UP": 0.0097553369862352,
+        "Vox": 0.0078528132327509
+      },
+      {
+        "term": "vox",
+        "mi_grupo": 0.1051206138273879,
+        "ERC": 0.0009967877720671,
+        "PNV": 0.0005866873350914,
+        "PP": 0.0009997355556157,
+        "PSOE": 0.0015589679428446,
+        "UP": 0.0013095257207263,
+        "Vox": 0.0095157533934335
+      },
+      {
+        "term": "españoles",
+        "mi_grupo": 0.0963378656752427,
+        "ERC": 0.0001205942052079,
+        "PNV": 0.00007244326028780826,
+        "PP": 0.0040657930248394,
+        "PSOE": 0.0011162610574705,
+        "UP": 0.0005396026922634,
+        "Vox": 0.0049192412648898
+      },
+      {
+        "term": "pie",
+        "mi_grupo": 0.0865725493276183,
+        "ERC": 0.0005766983630232,
+        "PNV": 0.00006502178452482496,
+        "PP": 0.0008157081886298,
+        "PSOE": 0.0008560421988639,
+        "UP": 0.000425396282586,
+        "Vox": 0.0073413030303903
+      },
+      {
+        "term": "puestos",
+        "mi_grupo": 0.0747446104997036,
+        "ERC": 0.0007716710303996,
+        "PNV": 0.0000939787919827197,
+        "PP": 0.0008148428310896,
+        "PSOE": 0.0008317380210392,
+        "UP": 0.0005452514437696,
+        "Vox": 0.0070488292220267
+      },
+      {
+        "term": "sánchez",
+        "mi_grupo": 0.0729109627745905,
+        "ERC": 0.0003794016705918,
+        "PNV": 0.0001235160754703,
+        "PP": 0.0040135989327493,
+        "PSOE": 0.0005332815854355,
+        "UP": 0.00009883200375787072,
+        "Vox": 0.0017787612389156
+      },
+      {
+        "term": "señoras",
+        "mi_grupo": 0.067551744426995,
+        "ERC": 0.0008725859270525,
+        "PNV": 0.0003494925375365,
+        "PP": 0.0009624868031283,
+        "PSOE": 0.000997268468409,
+        "UP": 0.0005665594058751,
+        "Vox": 0.0069800717766479
+      },
+      {
+        "term": "señoría",
+        "mi_grupo": 0.0594859327850172,
+        "ERC": 0.000115167397563,
+        "PNV": 0.0001255942003181,
+        "PP": 0.001480808249819,
+        "PSOE": 0.0041228676952132,
+        "UP": 0.0041124787511036,
+        "Vox": 0.0005973121531816
+      },
+      {
+        "term": "señores",
+        "mi_grupo": 0.056889517771173,
+        "ERC": 0.0011742930897121,
+        "PNV": 0.0003752696331185,
+        "PP": 0.0021955996741374,
+        "PSOE": 0.001451507365987,
+        "UP": 0.0010957267780304,
+        "Vox": 0.0068746506852777
+      },
+      {
+        "term": "país",
+        "mi_grupo": 0.051060092535148,
+        "ERC": 0.001435633004847,
+        "PNV": 0.0006437528434724,
+        "PP": 0.0022368287892478,
+        "PSOE": 0.0032702605155746,
+        "UP": 0.0037878564070556,
+        "Vox": 0.0008587482888933
+      },
+      {
+        "term": "parlamentario",
+        "mi_grupo": 0.0473170839769605,
+        "ERC": 0.0012153786184035,
+        "PNV": 0.0012005275089886,
+        "PP": 0.0014419544523637,
+        "PSOE": 0.0022836137559142,
+        "UP": 0.0012979143896456,
+        "Vox": 0.0062905244193777
+      },
+      {
+        "term": "diputados",
+        "mi_grupo": 0.0465998579019903,
+        "ERC": 0.0015746852164603,
+        "PNV": 0.0004034068812019,
+        "PP": 0.0017456509046821,
+        "PSOE": 0.0013956364227483,
+        "UP": 0.0010172596322394,
+        "Vox": 0.0068266352401906
+      },
+      {
+        "term": "españa",
+        "mi_grupo": 0.0454540660431752,
+        "ERC": 0.0010611330939739,
+        "PNV": 0.0006406750372537,
+        "PP": 0.0038968947320303,
+        "PSOE": 0.0035760589519737,
+        "UP": 0.0026682977914085,
+        "Vox": 0.005179775273294
+      },
+      {
+        "term": "derecha",
+        "mi_grupo": 0.0445025284290054,
+        "ERC": 0.0018534240418305,
+        "PNV": 0.00008247168810455785,
+        "PP": 0.0001083329305765,
+        "PSOE": 0.0009984672859443,
+        "UP": 0.0013694031058468,
+        "Vox": 0.0002029415044605
+      },
+      {
+        "term": "usted",
+        "mi_grupo": 0.0425399143720301,
+        "ERC": 0.0024716464394076,
+        "PNV": 0.0023158672621707,
+        "PP": 0.0092238119129269,
+        "PSOE": 0.0054831885386595,
+        "UP": 0.0029953044932211,
+        "Vox": 0.0055109990096585
+      },
+      {
+        "term": "presidenta",
+        "mi_grupo": 0.0415137689015141,
+        "ERC": 0.0052032472903655,
+        "PNV": 0.0053987954353702,
+        "PP": 0.0065717516432216,
+        "PSOE": 0.0053290111541968,
+        "UP": 0.0033824316472497,
+        "Vox": 0.0041726518312079
+      },
+      {
+        "term": "euskadi",
+        "mi_grupo": 0.037931015804367,
+        "ERC": 0.00008303081144121973,
+        "PNV": 0.0018349979835732,
+        "PP": 0.0002292225900126,
+        "PSOE": 0.0001580158289775,
+        "UP": 0.0001525175115401,
+        "Vox": 0.000013324115901378852
+      },
+      {
+        "term": "gobierno",
+        "mi_grupo": 0.0374283470242153,
+        "ERC": 0.0032900971814402,
+        "PNV": 0.0028389163717707,
+        "PP": 0.0058480298727967,
+        "PSOE": 0.0058626498790912,
+        "UP": 0.0033978418339599,
+        "Vox": 0.0045330234759414
+      },
+      {
+        "term": "muchas",
+        "mi_grupo": 0.0372860722240369,
+        "ERC": 0.00780932187931,
+        "PNV": 0.0058718388129914,
+        "PP": 0.0067892108737298,
+        "PSOE": 0.0052659614745754,
+        "UP": 0.004935122528887,
+        "Vox": 0.0035377835022263
+      },
+      {
+        "term": "gràcies",
+        "mi_grupo": 0.0368089085315768,
+        "ERC": 0.0024734058571763,
+        "PNV": 0,
+        "PP": 0,
+        "PSOE": 0.0000427403975815804,
+        "UP": 0.000363388677643,
+        "Vox": 0.0000017619045968005052
+      }
+    ]
+  }
+};
+    vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
+  </script>
+</body>
+</html>
